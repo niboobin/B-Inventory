@@ -6,19 +6,19 @@
 ## Step by step Assignment Explanation
 
 #### 1. Creating a new Django Project
-    - Create a python virtual environment
+- Create a python virtual environment
 
     ```
     python -m venv env
     ```
 
-    - Activate the virtual environment
+- Activate the virtual environment
 
     ```
     env\Scripts\activate
     ```
 
-    - I create a file named `requirements.txt` and added these dependencies :
+- I create a file named `requirements.txt` and added these dependencies :
     
     ```
     django
@@ -29,61 +29,61 @@
     urllib3
     ``` 
 
-    - Install the dependencies :
+- Install the dependencies :
     
     ```
     pip install -r requirements.txt
     ```
 
-    - create a django project, i use the name "inventory"
+- create a django project, i use the name "inventory"
     
     ```
     django-admin startproject inventory .
     ```
 
-    - Finally, in the main directory, open `settings.py` and add `"*"` to `ALLOWED_HOST`
+- Finally, in the main directory, open `settings.py` and add `"*"` to `ALLOWED_HOST`
     The list of hosts permitted to access the web application is called ALLOWED_HOSTS. The application will be broadly accessible since you allow access from any host by changing the value to ["*"]
 
 #### 2. Creating a new app for the project
-  - Create a `main` application in the B-Inventory project by running the following command :
+- Create a `main` application in the B-Inventory project by running the following command :
   
   ```
   python manage.py startapp main
   ```
 
-  - We have to register the app by adding `main` in `settings.py`
-  - Create a new folder `templates` inside the main directory and create `main.html`
+- We have to register the app by adding `main` in `settings.py`
+- Create a new folder `templates` inside the main directory and create `main.html`
 
 #### 3. Creating a URL routing config to access the `main` app
-    - Inside the `inventory` directory, Import the `include` function in `urls.py`
+- Inside the `inventory` directory, Import the `include` function in `urls.py`
 
-    -  in the `urls.py` add 
+-  in the `urls.py` add 
    
     ```
     path('main/', include('main.urls'))
     ```
 
 #### 4. Creating a model on the main app
-    - In `models.py`, create a class named `Item` and fill in these attributes :
-        - `name` as the name of the item, with type `CharField`.
-        - `amount` as the amount/count of the item, with type `IntegerField`.
-        - `description` as the description of the item, with type `TextField`.
-        - `price` as the amount that items worth, with type `TextField`
+- In `models.py`, create a class named `Item` and fill in these attributes :
+    - `name` as the name of the item, with type `CharField`.
+    - `amount` as the amount/count of the item, with type `IntegerField`.
+    - `description` as the description of the item, with type `TextField`.
+    - `price` as the amount that items worth, with type `TextField`
 
-    - Create model migrations with:
+- Create model migrations with:
     
     ```
     python manage.py makemigrations
     ```
 
-    - After that, apply the migrations with the local database :
+- After that, apply the migrations with the local database :
     
     ```
     python manage.py migrate
     ```
 
 #### 5. Integrating MVT Components
-    - In the `main` directory, open `views.py` and add the following codes :
+- In the `main` directory, open `views.py` and add the following codes :
 
     ```
      from django.shortcuts import render
@@ -99,7 +99,7 @@
     ```
 
 #### 6. Routing in `urls.py` to map the function in `views.py` to an URL
-    - In the main `directory`,  create `urls.py` and add the following codes :
+- In the main `directory`,  create `urls.py` and add the following codes :
 
     ```
     from django.urls import path
@@ -113,8 +113,8 @@
     ```
 
 #### 7. Deploy the app to adaptable
-    - Add,commit, and push the project to the repository 
-    - Deploy the app to adaptable
+- Add,commit, and push the project to the repository 
+- Deploy the app to adaptable
 
 ## Django Diagram
 

@@ -5,7 +5,7 @@
 
 ## Step by step Assignment Explanation
 
-####1. Creating a new Django Project
+#### 1. Creating a new Django Project
     - Create a python virtual environment
     ```
     python -m venv env
@@ -34,7 +34,7 @@
     - Finally, in the main directory, open `settings.py` and add `"*"` to `ALLOWED_HOST`
     The list of hosts permitted to access the web application is called ALLOWED_HOSTS. The application will be broadly accessible since you allow access from any host by changing the value to ["*"]
 
-####2. Creating a new app for the project
+#### 2. Creating a new app for the project
   - Create a `main` application in the B-Inventory project by running the following command :
   ```
   python manage.py startapp main
@@ -42,7 +42,7 @@
   - We have to register the app by adding `main` in `settings.py`
   - Create a new folder `templates` inside the main directory and create `main.html`
 
-####3. Creating a URL routing config to access the `main` app
+#### 3. Creating a URL routing config to access the `main` app
     - Inside the `inventory` directory, Import the `include` function in `urls.py`
 
     -  in the `urls.py` add 
@@ -50,7 +50,7 @@
     path('main/', include('main.urls'))
     ```
 
-####4. Creating a model on the main app
+#### 4. Creating a model on the main app
     - In `models.py`, create a class named `Item` and fill in these attributes :
         - `name` as the name of the item, with type `CharField`.
         - `amount` as the amount/count of the item, with type `IntegerField`.
@@ -66,7 +66,7 @@
     python manage.py migrate
     ```
 
-####5. Integrating MVT Components
+#### 5. Integrating MVT Components
     - In the `main` directory, open `views.py` and add the following codes :
     ```
      from django.shortcuts import render
@@ -81,7 +81,7 @@
     return render(request, 'main.html', context)
     ```
 
-####6. Routing in `urls.py` to map the function in `views.py` to an URL
+#### 6. Routing in `urls.py` to map the function in `views.py` to an URL
     - In the main `directory`,  create `urls.py` and add the following codes :
     ```
     from django.urls import path
@@ -94,7 +94,7 @@
     ]
     ```
 
-####7. Deploy the app to adaptable
+#### 7. Deploy the app to adaptable
     - Add,commit, and push the project to the repository 
     - Deploy the app to adaptable
 

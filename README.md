@@ -18,7 +18,7 @@
     env\Scripts\activate
     ```
 
-- I create a file named `requirements.txt` and added these dependencies :
+- Create a file named `requirements.txt` and added these dependencies :
     
     ```
     django
@@ -35,7 +35,7 @@
     pip install -r requirements.txt
     ```
 
-- create a django project, i use the name "inventory"
+- Create a django project, I use the name "inventory"
     
     ```
     django-admin startproject inventory .

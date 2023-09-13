@@ -7,14 +7,19 @@
 
 #### 1. Creating a new Django Project
     - Create a python virtual environment
+
     ```
     python -m venv env
     ```
+
     - Activate the virtual environment
+
     ```
     env\Scripts\activate
     ```
+
     - I create a file named `requirements.txt` and added these dependencies :
+    
     ```
     django
     gunicorn
@@ -23,22 +28,29 @@
     requests
     urllib3
     ``` 
+
     - Install the dependencies :
+    
     ```
     pip install -r requirements.txt
     ```
+
     - create a django project, i use the name "inventory"
+    
     ```
     django-admin startproject inventory .
     ```
+
     - Finally, in the main directory, open `settings.py` and add `"*"` to `ALLOWED_HOST`
     The list of hosts permitted to access the web application is called ALLOWED_HOSTS. The application will be broadly accessible since you allow access from any host by changing the value to ["*"]
 
 #### 2. Creating a new app for the project
   - Create a `main` application in the B-Inventory project by running the following command :
+  
   ```
   python manage.py startapp main
   ```
+
   - We have to register the app by adding `main` in `settings.py`
   - Create a new folder `templates` inside the main directory and create `main.html`
 
@@ -46,6 +58,7 @@
     - Inside the `inventory` directory, Import the `include` function in `urls.py`
 
     -  in the `urls.py` add 
+   
     ```
     path('main/', include('main.urls'))
     ```
@@ -58,16 +71,20 @@
         - `price` as the amount that items worth, with type `TextField`
 
     - Create model migrations with:
+    
     ```
     python manage.py makemigrations
     ```
+
     - After that, apply the migrations with the local database :
+    
     ```
     python manage.py migrate
     ```
 
 #### 5. Integrating MVT Components
     - In the `main` directory, open `views.py` and add the following codes :
+
     ```
      from django.shortcuts import render
 
@@ -83,6 +100,7 @@
 
 #### 6. Routing in `urls.py` to map the function in `views.py` to an URL
     - In the main `directory`,  create `urls.py` and add the following codes :
+
     ```
     from django.urls import path
     from main.views import show_main
@@ -125,6 +143,8 @@ Now, regarding Django web applications, it is highly recommended to create and u
 
 ## MVC, MVT MVVM
 MVC(Model-View-Controller) is a general architectural pattern used in various application types.
+
 MVT(Model-View-Template) is a variation of MVC tailored for web development, emphasizing the separation of presentation logic into templates.
+
 MVVM(Model-View-ViewModel) is used primarily in client-side web applications, focusing on two-way data binding and separating the View from the underlying logic in the ViewModel.
 

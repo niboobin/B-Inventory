@@ -482,7 +482,7 @@ XML/1
             return HttpResponseRedirect(reverse('main:show_main'))
     ```
 
-- Create a button to increment, decrement, and delete an item. It first checks if the key `increment`, `decrement`, and `delete` is present in the POST request. 
+- In `main.html` Create a button to increment, decrement, and delete an item. It first checks if the key `increment`, `decrement`, and `delete` is present in the POST request. 
 
 - If `increment` is in the POST request, it retrieves the `product_id` from the POST data, fetches the corresponding product from the database based on the ID, increments the `amount` attribute of the product by 1, saves the product to update the database, and then redirects the user to a specific URL using HttpResponseRedirect.
 

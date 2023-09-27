@@ -430,7 +430,7 @@ XML/1
 
 - In `views.py`, import `login_required` and add `@login_required(login_url='/login')`  to restrict access to the main page if the user is not logged in. 
 
-#### Connect the `Product` model to the `user` Model.
+#### 5. Connect the `Product` model to the `user` Model.
 
 - In `models.py`, import user and add this code in the `Product` class so that each product belongs to a specific user.
 
@@ -458,6 +458,29 @@ XML/1
     ```
 
 - Also, modify ``name`` into `'name': request.user.username` in `context`. Save all changes and run the migrations for the model. And make sure you create an account if you havent already.
+
+#### 6. Create an Increment, Decrement, and Delete Button
+
+    ```
+    if request.method == 'POST':
+        if 'increment' in request.POST:
+            product_id = request.POST.get('increment')
+            product = products.get(id=product_id)
+            product.amount += 1
+            product.save()
+            return HttpResponseRedirect(reverse('main:show_main'))
+        elif 'decrement' in request.POST:
+            product_id = request.POST.get('decrement')
+            product= products.get(id=product_id)
+            product.amount -= 1
+            product.save()
+            return HttpResponseRedirect(reverse('main:show_main'))
+        elif 'delete' in request.POST:
+            product_id = request.POST.get('delete')
+            product = products.get(id=product_id)
+            product.delete()
+            return HttpResponseRedirect(reverse('main:show_main'))
+    ```
 
 
 ## `UserCreationForm` in Django

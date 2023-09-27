@@ -9,6 +9,8 @@
     <h5>Class:</h5>
     <p>{{class}}</p>
 
+    <p>You have added {{ product_count }} Items in the inventory!</p>
+
     <table>
         <tr>
             <th>Name</th>
@@ -57,7 +59,7 @@
     
     <a href="{% url 'main:create_product' %}">
         <button>
-            Add New Product
+            Add New Item
         </button>
     </a>
 

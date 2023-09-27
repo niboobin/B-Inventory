@@ -43,6 +43,7 @@ def show_main(request):
         'name': request.user.username,
         'class': 'PBP KKI',
         'products': products,
+        'product_count': product_count,
         'last_login': request.COOKIES['last_login'],
     }
 
@@ -108,3 +109,8 @@ def logout_user(request):
     response = HttpResponseRedirect(reverse('main:login'))
     response.delete_cookie('last_login')
     return response
+
+def delete_product(request, id):
+    product = Product.objects.get(pk=id)
+    product.delete()
+    return HttpResponseRedirect(reverse('main:show_main'))

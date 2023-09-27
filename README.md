@@ -361,3 +361,128 @@ JSON/1
 
 XML/1
 ![XMLID](https://cdn.discordapp.com/attachments/1153252018023043093/1153258331666907206/image.png)
+
+# Assignment 4
+
+## Step by step explanation 
+
+#### 1. Create a registration form and function
+
+- In `views.py`, add imports for `redirect`, `UserCreationForm`, and `messages`. Then, create a new function called `register`
+
+    ```
+    def register(request):
+    form = UserCreationForm()
+
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your account has been successfully created!')
+            return redirect('main:login')
+    context = {'form':form}
+    return render(request, 'register.html', context)
+    ```
+- In `urls.py`, import the register function and add the path url to `urlpatterns`.
+
+
+
+#### 2. Create a login function
+
+- In `views.py`, add imports for `authenticate` and `login`. Then, create a new function called `login_user.`
+
+    ```
+    def login_user(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            response = HttpResponseRedirect(reverse("main:show_main")) 
+            response.set_cookie('last_login', str(datetime.datetime.now()))
+            return response
+        else:
+            messages.info(request, 'Sorry, incorrect username or password. Please try again.')
+    context = {}
+    return render(request, 'login.html', context)
+    ```
+
+- Create a new file called `login.html` inside main/templates. Then import the login_user function and add the path url.
+
+- In `views.py`, in context, we add `'last_login': request.COOKIES['last_login'],` so that it can show the last log in data.
+
+#### 3. Create a logout function
+
+- In `views.py` add an import for `logout`. Then, create a new function called `logout_user` that deletes the cookie from the last login.
+
+    ```
+    def logout_user(request):
+        logout(request)
+        response = HttpResponseRedirect(reverse('main:login'))
+        response.delete_cookie('last_login')
+        return response
+    ```
+
+- In `main.html`, add a logout button, and import `logout` and add the path in `urls.py`.
+
+#### 4. Restricting access to the main page if the user is not logged in
+
+- In `views.py`, import `login_required` and add `@login_required(login_url='/login')`  to restrict access to the main page if the user is not logged in. 
+
+#### Connect the `Product` model to the `user` Model.
+
+- In `models.py`, import user and add this code in the `Product` class so that each product belongs to a specific user.
+
+    ```
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    ```
+
+- Modify the `create_product` function so that it sets the `user` field to the `User` associated with the currently logged-in user:
+    
+    ```
+    def create_product(request):
+    form = ProductForm(request.POST or None)
+
+    if form.is_valid() and request.method == "POST":
+        product = form.save(commit=False)
+        product.user = request.user
+        product.save()
+        return HttpResponseRedirect(reverse('main:show_main'))
+    ```
+
+- Modify the `show_main` function:
+    ```
+    def show_main(request):
+        products = Product.objects.filter(user=request.user)
+    ```
+
+- Also, modify ``name`` into `'name': request.user.username` in `context`. Save all changes and run the migrations for the model. And make sure you create an account if you havent already.
+
+
+## `UserCreationForm` in Django
+
+Django `UserCreationForm` is used for creating a new user that can use our web application. The advantage is that is simplifies user registration. UserCreationForm simplifies the process of creating a user registration form. It provides a ready-to-use form class, saving developers time and effort in creating a registration form from scratch. And it is
+
+## Differences between authorization and authentication
+
+Authentication is the process of verifying the identity of a user, ensuring that the user is who they claim to be. In a Django application, authentication involves mechanisms such as username and password validation, token-based authentication, social login, etc. It is the initial step where a user provides credentials (e.g., username and password) to gain access to the system. Successful authentication grants the user an identity within the system, which is then used for further interactions.
+
+Authorization, on the other hand, is the process of determining what actions or resources a user is allowed to access or perform within the application. It defines permissions and restrictions on what authenticated users can do. In a Django application, authorization is often implemented using roles, groups, or permissions.
+
+## Cookies and how Django use cookies
+
+Cookies are small pieces of data that a website can store on a user's browser. They are typically used to track and manage user sessions, remember user preferences, and provide a personalized browsing experience.
+
+In Django, the framework provides built-in support for handling sessions using cookies. Django uses a middleware component called the "session middleware" to manage user sessions. This middleware is responsible for setting and reading the session cookie in each HTTP request. When a user logs in or a session is created for any reason, Django sets a session cookie in the user's browser. This cookie contains a session ID, which is a unique identifier for the session.
+
+## Are cookies safe? Is there any potential risks?
+
+Cookies are a fundamental component of web applications and play a crucial role in enabling various functionalities and enhancing user experience. However, they do present certain security and privacy risks that developers and users should be aware of. 
+
+Attackers can modify cookies (cookie tampering) to manipulate application behavior or gain unauthorized access to certain features or information. If an attacker gains access to a user's session cookie (e.g., through theft, interception), they can impersonate the user by using that cookie to authenticate themselves to the web application. This is known as session hijacking.
+
+## Information of the logged-in user
+![Display1](https://cdn.discordapp.com/attachments/1153252018023043093/1156378038326542427/image.png?ex=6514c078&is=65136ef8&hm=ab14945ad1dc7b522ac9e34286f8701ae2439efcb5b051ac0b0154e1d1e19450&)
+
+![Display2](https://cdn.discordapp.com/attachments/1153252018023043093/1156379153931702302/image.png?ex=6514c182&is=65137002&hm=ebde3a266343fa8d8bf4e35ab739bffaa7e033134d6c7d02cc787c3ee11acbbd&)

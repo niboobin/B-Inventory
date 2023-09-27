@@ -3,9 +3,6 @@
 {% block content %}
     <h1>B-Inventory</h1>
 
-    <h5>Application Name:</h5>
-    <p>{{application_name}}</p>
-
     <h5>Name:</h5>
     <p>{{name}}</p>
 
@@ -15,6 +12,7 @@
     <table>
         <tr>
             <th>Name</th>
+            <th>Amount</th>
             <th>Price</th>
             <th>Description</th>
             <th>Date Added</th>
@@ -25,9 +23,24 @@
         {% for product in products %}
             <tr>
                 <td>{{product.name}}</td>
+                <td>{{product.amount}}</td>
                 <td>{{product.price}}</td>
                 <td>{{product.description}}</td>
                 <td>{{product.date_added}}</td>
+                <td>
+                    <form method="post">
+                        {% csrf_token %}
+                        <button type="submit" name="increment" value="{{ product.id }}">
+                            Increment Amount
+                        </button>
+                        <button type="submit" name="decrement" value="{{ product.id }}">
+                            Decrement Amount
+                        </button>
+                        <button type="submit" name="delete" value="{{ product.id }}">
+                            Delete Item
+                        </button>  
+                    </form>
+                </td>
             </tr>
         {% endfor %}
     </table>

@@ -5,41 +5,73 @@
 {% endblock meta %}
 
 {% block content %}
+<style>
+    body {
+        background-color: #333; /* Dark gray color */
+        color: #fff; /* Text color set to white */
+        padding: 50px;
+    }
+    .container {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+    .card {
+        background-color: #444; /* Darker gray for the card */
+        border: 1px solid #555;
+        border-radius: 10px;
+    }
+    .card-header {
+        background-color: #333; /* Adjusted to match body background */
+        padding: 20px;
+        border-bottom: 1px solid #555;
+        color: #fff; /* Text color set to white */
+    }
+    .card-body {
+        padding: 20px;
+    }
+    .form-group input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #555;
+        border-radius: 5px;
+    }
+    .btn {
+        width: 100%;
+        padding: 10px;
+    }
+</style>
 
-<div class = "login">
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h1>Login</h1>
+        </div>
+        <div class="card-body">
+            <form method="POST" action="">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username" style="color: #fff;">Username:</label>
+                    <input type="text" name="username" id="username" placeholder="Username" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="password" style="color: #fff;">Password:</label>
+                    <input type="password" name="password" id="password" placeholder="Password" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
 
-    <h1>Login</h1>
+            {% if messages %}
+                <ul style="color: #fff;">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
 
-    <form method="POST" action="">
-        {% csrf_token %}
-        <table>
-            <tr>
-                <td>Username: </td>
-                <td><input type="text" name="username" placeholder="Username" class="form-control"></td>
-            </tr>
-                    
-            <tr>
-                <td>Password: </td>
-                <td><input type="password" name="password" placeholder="Password" class="form-control"></td>
-            </tr>
-
-            <tr>
-                <td></td>
-                <td><input class="btn login_btn" type="submit" value="Login"></td>
-            </tr>
-        </table>
-    </form>
-
-    {% if messages %}
-        <ul>
-            {% for message in messages %}
-                <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}     
-        
-    Don't have an account yet? <a href="{% url 'main:register' %}">Register Now</a>
-
+            <p style="color: #fff;">Don't have an account yet? <a href="{% url 'main:register' %}" style="color: #fff;">Register Now</a></p>
+        </div>
+    </div>
 </div>
 
 {% endblock content %}

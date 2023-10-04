@@ -516,3 +516,42 @@ Attackers can modify cookies (cookie tampering) to manipulate application behavi
 ![Display1](https://cdn.discordapp.com/attachments/1153252018023043093/1156378038326542427/image.png?ex=6514c078&is=65136ef8&hm=ab14945ad1dc7b522ac9e34286f8701ae2439efcb5b051ac0b0154e1d1e19450&)
 
 ![Display2](https://cdn.discordapp.com/attachments/1153252018023043093/1156379153931702302/image.png?ex=6514c182&is=65137002&hm=ebde3a266343fa8d8bf4e35ab739bffaa7e033134d6c7d02cc787c3ee11acbbd&)
+
+# Assignment 5
+
+## CSS Element Selectors and Usage
+
+- Class Selector (.classname): Used to apply styles to HTML elements with a specific class attribute. It's versatile and commonly used for styling multiple elements.
+- ID Selector (#id): Targets a unique HTML element based on its ID attribute. Typically, it's used when you need to style a specific element uniquely.
+- Element Selector (elementname): Targets all instances of a specific HTML element. It's useful when you want to style a particular HTML element across your webpage.
+
+## HTML5 Tags
+
+- `<header>`: Represents a group of introductory or navigational aids, often containing logos, headings, navigation menus, etc.
+
+- `<nav>`: Defines a set of navigation links within the document.
+
+- `<section>`: Represents a thematic grouping of content, typically with a heading.
+
+- `<article>`: Represents an independent piece of content within a document.
+
+- `<aside>`: Defines content related to the main content, such as sidebars.
+
+- `<footer>`: Represents a footer for a document or a section, often containing authorship information, copyright, links to related documents, etc.
+
+## Differences Between Margin and Padding
+
+**Margin** is the space outside the border of an element. Margins create space between the element's border and surrounding elements.**Padding** is the space between the element's content and its border. Padding adds space within the element, separating its content from the border.
+
+## Differences Between Tailwind and Bootstrap
+
+Tailwind is focused on providing low-level utility classes that you can combine to build custom designs efficiently. And it is Highly customizable, allowing for configuration of styles and the generation of a tailored build to reduce unused styles. 
+
+Meanwhile Bootstrap provides pre-designed, styled components that you can use directly, which can speed up development.  It offers a wide range of pre-built components and responsive grid system, making it easy to create complex layouts.
+
+ - When to use Bootstrap :
+ When you need a robust set of pre-designed components. And If you're a beginner or prefer a more guided, component-focused approach.
+ Projects where customization isn't a top priority.
+
+ - When to use Tailwind :
+ When you want a highly customizable design system and have CSS knowledge. And If you prefer a utility-first approach and enjoy creating custom designs. Projects where optimization and reduction of unused styles are important.

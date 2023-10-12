@@ -4,12 +4,49 @@
 <style>
     body {
         background-color: #212529;
+        color: #ffffff;
     }
+
     .highlighted-item {
         background-color: #FFD700; /* Yellow background color */
         color: #000000; /* Black text color */
     }
+
+    .container {
+        padding: 20px;
+    }
+
+    th, td {
+        padding: 10px;
+        border: 1px solid #ffffff;
+    }
+
+    th {
+        background-color: #343a40;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    table tr:nth-child(even) {
+        background-color: #454d55;
+    }
+
+     
+     .modal-content {
+        background-color: #000;
+        color: #fff;
+    }
+
+    .modal-header {
+        border-bottom: 1px solid #343a40;
+    }
+
 </style>
+
 <nav class="navbar navbar-dark bg-dark border-bottom">
     <div class="container">
         <a class="navbar-brand" href="#">B-Inventory | Welcome {{ name }}!</a>
@@ -20,46 +57,50 @@
     </div>
 </nav>
 
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Product</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="form" onsubmit="return false;">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="name" class="col-form-label">Name:</label>
+                        <input type="text" class="form-control" id="name" name="name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="amount" class="col-form-label">Amount:</label>
+                        <input type="number" class="form-control" id="amount" name="amount">
+                    </div>
+                    <div class="mb-3">
+                        <label for="price" class="col-form-label">Price:</label>
+                        <input type="number" class="form-control" id="price" name="price">
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="col-form-label">Description:</label>
+                        <textarea class="form-control" id="description" name="description"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Product</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container mt-4 text-light">
     <h1>B-Inventory</h1>
 
     <div class="mb-3">
-
         <p>You have added {{ product_count }} Items in the inventory!</p>
     </div>
 
-    <table class="table table-dark">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Amount</th>
-                <th>Price</th>
-                <th>Description</th>
-                <th>Date Added</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for product in products %}
-                <tr {% if forloop.last %}class="highlighted-item"{% endif %}>
-                    <td>{{ product.name }}</td>
-                    <td>{{ product.amount }}</td>
-                    <td>{{ product.price }}</td>
-                    <td>{{ product.description }}</td>
-                    <td>{{ product.date_added }}</td>
-                    <td>
-                        <form method="post">
-                            {% csrf_token %}
-                            <button type="submit" name="increment" value="{{ product.id }}" class="btn btn-sm btn-success">Increment</button>
-                            <button type="submit" name="decrement" value="{{ product.id }}" class="btn btn-sm btn-warning">Decrement</button>
-                            <button type="submit" name="delete" value="{{ product.id }}" class="btn btn-sm btn-danger">Delete</button>
-                        </form>
-                        <a href="{% url 'main:edit_product' product.pk %}" class="btn btn-sm btn-primary">Edit</a>
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <table id="product_table"></table>
 
     <br />
 
@@ -68,6 +109,51 @@
     <a href="{% url 'main:logout' %}" class="btn btn-danger">Logout</a>
 
     <a href="{% url 'main:create_product' %}" class="btn btn-primary">Add New Item</a>
+
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Product by AJAX</button>
 </div>
+
+<script>
+    async function getProducts() {
+        return fetch("{% url 'main:get_product_json' %}").then((res) => res.json());
+    }
+
+    async function refreshProducts() {
+        document.getElementById("product_table").innerHTML = ""
+        const products = await getProducts()
+        let htmlString = `<tr>
+            <th>Name</th>
+            <th>amount</th>
+            <th>Price</th>
+            <th>Description</th>
+            <th>Date Added</th>
+        </tr>`
+        products.forEach((item) => {
+            htmlString += `\n<tr>
+            <td>${item.fields.name}</td>
+            <td>${item.fields.amount}</td>
+            <td>${item.fields.price}</td>
+            <td>${item.fields.description}</td>
+            <td>${item.fields.date_added}</td>
+        </tr>` 
+        })
+        
+        document.getElementById("product_table").innerHTML = htmlString
+    }
+
+    refreshProducts()
+
+    function addProduct() {
+        fetch("{% url 'main:add_product_ajax' %}", {
+            method: "POST",
+            body: new FormData(document.querySelector('#form'))
+        }).then(refreshProducts);
+
+        document.getElementById("form").reset();
+        return false;
+    }
+
+    document.getElementById("button_add").onclick = addProduct;
+</script>
 
 {% endblock content %}

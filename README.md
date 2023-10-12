@@ -1,3 +1,6 @@
+<details>
+<summary> Assignment 2 </summary>
+
 # Assignment 2
 ### Muhammad Obin Mandalika -2206046771
 
@@ -147,6 +150,10 @@ MVC(Model-View-Controller) is a general architectural pattern used in various ap
 MVT(Model-View-Template) is a variation of MVC tailored for web development, emphasizing the separation of presentation logic into templates.
 
 MVVM(Model-View-ViewModel) is used primarily in client-side web applications, focusing on two-way data binding and separating the View from the underlying logic in the ViewModel.
+
+</details>
+<details>
+<summary> Assignment 3 </summary>
 
 # Assignment 3
 
@@ -362,6 +369,11 @@ JSON/1
 XML/1
 ![XMLID](https://cdn.discordapp.com/attachments/1153252018023043093/1153258331666907206/image.png)
 
+</details>
+
+<details>
+<summary> Assignment 4 </summary>
+
 # Assignment 4
 
 ## Step by step explanation 
@@ -517,6 +529,11 @@ Attackers can modify cookies (cookie tampering) to manipulate application behavi
 
 ![Display2](https://cdn.discordapp.com/attachments/1153252018023043093/1156379153931702302/image.png?ex=6514c182&is=65137002&hm=ebde3a266343fa8d8bf4e35ab739bffaa7e033134d6c7d02cc787c3ee11acbbd&)
 
+</details>
+
+<details>
+<summary> Assignment 5 </summary>
+
 # Assignment 5
 
 ## CSS Element Selectors and Usage
@@ -555,3 +572,27 @@ Meanwhile Bootstrap provides pre-designed, styled components that you can use di
 
  - When to use Tailwind :
  When you want a highly customizable design system and have CSS knowledge. And If you prefer a utility-first approach and enjoy creating custom designs. Projects where optimization and reduction of unused styles are important.
+
+ ## Step by step
+ 
+ </details>
+
+ # Assignment 6
+
+ ## Differences between asynchronous programming and synchronous programming
+
+ In synchronous programming, tasks are executed one after the other in a sequential manner. Each task must complete before the program moves on to the next task. If a task takes a long time to complete, the entire program is blocked or "waits" for that task to finish. This can lead to inefficiencies, especially when dealing with I/O operations or tasks that involve waiting for external events. 
+
+ In asynchronous programming, tasks are started but not necessarily completed immediately. The program doesn't wait for a task to finish before moving on to the next one. Instead, it can execute other tasks or continue with other operations while the initial tasks are being processed in the background. Callbacks or promises are often used to handle the eventual results of these asynchronous tasks.
+
+ ## Event-Driven Programming Paradigm
+
+ ## Implementation of asynchronous programming in AJAX
+
+ ## The implementation of AJAX is done using the Fetch API rather than the jQuery library. Compare the two technologies and write down your opinion which technology is better to use
+
+ The Fetch API is a modern standard and is built into the browser, making it a part of the JavaScript language itself. It's a part of the Web API standard and is designed to be consistent, intuitive, and compatible with modern development practices. jQuery AJAX provides an abstraction over XMLHttpRequest, offering better cross-browser compatibility, especially for older browsers.
+
+ If you're working on a modern web application and prefer to use the latest web standards, the Fetch API is the recommended choice. It aligns well with modern JavaScript practices and is a part of the standard web platform.
+ In summary, the Fetch API is generally preferred for its modern standards, simplicity, and alignment with modern JavaScript practices, while jQuery AJAX might still be useful in certain situations where cross-browser compatibility and a simplified syntax are essential.
+

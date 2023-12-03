@@ -928,6 +928,8 @@ Meanwhile Bootstrap provides pre-designed, styled components that you can use di
 
  <details>
 
+ <summary> Assignment 6 </summary>
+
  # Assignment 6
 
  ## Differences between asynchronous programming and synchronous programming

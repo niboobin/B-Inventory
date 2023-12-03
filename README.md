@@ -574,8 +574,359 @@ Meanwhile Bootstrap provides pre-designed, styled components that you can use di
  When you want a highly customizable design system and have CSS knowledge. And If you prefer a utility-first approach and enjoy creating custom designs. Projects where optimization and reduction of unused styles are important.
 
  ## Step by step
+
+ - Customize `main.html`
+
+ ```
+ {% extends 'base.html' %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #212529;
+        color: #ffffff;
+    }
+
+    .highlighted-item {
+        background-color: #FFD700; /* Yellow background color */
+        color: #000000; /* Black text color */
+    }
+
+    .container {
+        padding: 20px;
+    }
+
+    th, td {
+        padding: 10px;
+        border: 1px solid #ffffff;
+    }
+
+    th {
+        background-color: #343a40;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    table tr:nth-child(even) {
+        background-color: #454d55;
+    }
+
+     
+     .modal-content {
+        background-color: #000;
+        color: #fff;
+    }
+
+    .modal-header {
+        border-bottom: 1px solid #343a40;
+    }
+
+</style>
+
+<nav class="navbar navbar-dark bg-dark border-bottom">
+    <div class="container">
+        <a class="navbar-brand" href="#">B-Inventory | Welcome {{ name }}!</a>
+        <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Product</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="form" onsubmit="return false;">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="name" class="col-form-label">Name:</label>
+                        <input type="text" class="form-control" id="name" name="name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="amount" class="col-form-label">Amount:</label>
+                        <input type="number" class="form-control" id="amount" name="amount">
+                    </div>
+                    <div class="mb-3">
+                        <label for="price" class="col-form-label">Price:</label>
+                        <input type="number" class="form-control" id="price" name="price">
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="col-form-label">Description:</label>
+                        <textarea class="form-control" id="description" name="description"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Product</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-4 text-light">
+    <h1>B-Inventory</h1>
+
+    <div class="mb-3">
+        <p>You have added {{ product_count }} Items in the inventory!</p>
+    </div>
+
+    <table id="product_table"></table>
+
+    <br />
+
+    <h5>Last login session: {{ last_login }}</h5>
+
+    <a href="{% url 'main:logout' %}" class="btn btn-danger">Logout</a>
+
+    <a href="{% url 'main:create_product' %}" class="btn btn-primary">Add New Item</a>
+
+</div>
+ ```
+
+ - Customize `register.html`
+ ```
+ {% extends 'base.html' %}
+
+{% block meta %}
+    <title>Register</title>
+{% endblock meta %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h1>Register</h1>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Register</button>
+                        </div>
+                    </form>
+
+                    {% if messages %}
+                        <ul class="mt-3">
+                            {% for message in messages %}
+                                <li>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+ ```
+
+ - Customize `login.html`
+
+ ```
+ {% extends 'base.html' %}
+
+{% block meta %}
+    <title>Login</title>
+{% endblock meta %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #333; /* Dark gray color */
+        color: #fff; /* Text color set to white */
+        padding: 50px;
+    }
+    .container {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+    .card {
+        background-color: #444; /* Darker gray for the card */
+        border: 1px solid #555;
+        border-radius: 10px;
+    }
+    .card-header {
+        background-color: #333; /* Adjusted to match body background */
+        padding: 20px;
+        border-bottom: 1px solid #555;
+        color: #fff; /* Text color set to white */
+    }
+    .card-body {
+        padding: 20px;
+    }
+    .form-group input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #555;
+        border-radius: 5px;
+    }
+    .btn {
+        width: 100%;
+        padding: 10px;
+    }
+</style>
+
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h1>Login</h1>
+        </div>
+        <div class="card-body">
+            <form method="POST" action="">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username" style="color: #fff;">Username:</label>
+                    <input type="text" name="username" id="username" placeholder="Username" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="password" style="color: #fff;">Password:</label>
+                    <input type="password" name="password" id="password" placeholder="Password" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+
+            {% if messages %}
+                <ul style="color: #fff;">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <p style="color: #fff;">Don't have an account yet? <a href="{% url 'main:register' %}" style="color: #fff;">Register Now</a></p>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+ ```
+
+ - Customize `create_product.html`
+ ```
+ {% extends 'base.html' %}
+
+{% block meta %}
+    <title>Login</title>
+{% endblock meta %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #333; /* Dark gray color */
+        color: #fff; /* Text color set to white */
+        padding: 50px;
+    }
+    .container {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+    .card {
+        background-color: #444; /* Darker gray for the card */
+        border: 1px solid #555;
+        border-radius: 10px;
+    }
+    .card-header {
+        background-color: #333; /* Adjusted to match body background */
+        padding: 20px;
+        border-bottom: 1px solid #555;
+        color: #fff; /* Text color set to white */
+    }
+    .card-body {
+        padding: 20px;
+    }
+    .form-group input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #555;
+        border-radius: 5px;
+    }
+    .btn {
+        width: 100%;
+        padding: 10px;
+    }
+</style>
+
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h1>Login</h1>
+        </div>
+        <div class="card-body">
+            <form method="POST" action="">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username" style="color: #fff;">Username:</label>
+                    <input type="text" name="username" id="username" placeholder="Username" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="password" style="color: #fff;">Password:</label>
+                    <input type="password" name="password" id="password" placeholder="Password" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+
+            {% if messages %}
+                <ul style="color: #fff;">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <p style="color: #fff;">Don't have an account yet? <a href="{% url 'main:register' %}" style="color: #fff;">Register Now</a></p>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+ ```
  
+ - Customize `edit_product.html`
+ ```
+ {% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="container bg-light p-4">
+    <h1 class="mt-4">Edit Product</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.as_p }}
+        </div>
+        <button type="submit" class="btn btn-primary">Edit Product</button>
+    </form>
+</div>
+
+{% endblock %}
+
+ ```
  </details>
+
+ <details>
 
  # Assignment 6
 
@@ -587,7 +938,11 @@ Meanwhile Bootstrap provides pre-designed, styled components that you can use di
 
  ## Event-Driven Programming Paradigm
 
+ Event-driven programming paradigm is a programming paradigm where the flow of a program is determined by events that occur during its execution. One of the implementation in this assignment is when we try to add new item and update the display of books without refreshing the page. in code document.getElementById("button_add").onclick = addProduct;, document.getElementById("button_add")try to get the ID button_add, which is the button inside the form. .onclick is an event handler that specifies what should happen when the button is clicked. addProduct is a JavaScript function defined earlier in the code that is responsible for making an asynchronous request to add a new book to the collection and refreshing the display of books.
+
  ## Implementation of asynchronous programming in AJAX
+
+ Asynchronous programming in AJAX allows web applications to make HTTP requests to a server and receive data without blocking the main execution thread of the browser. This enables web pages to remain responsive and update their content dynamically without requiring full page reloads.
 
  ## The implementation of AJAX is done using the Fetch API rather than the jQuery library. Compare the two technologies and write down your opinion which technology is better to use
 
@@ -596,3 +951,102 @@ Meanwhile Bootstrap provides pre-designed, styled components that you can use di
  If you're working on a modern web application and prefer to use the latest web standards, the Fetch API is the recommended choice. It aligns well with modern JavaScript practices and is a part of the standard web platform.
  In summary, the Fetch API is generally preferred for its modern standards, simplicity, and alignment with modern JavaScript practices, while jQuery AJAX might still be useful in certain situations where cross-browser compatibility and a simplified syntax are essential.
 
+## Step By Step Explanation
+
+1. Create a new function inside `views.py` called `get_product_json` to return data as JSON
+
+```
+def get_product_json(request):
+product_item = Item.objects.filter(user=request.user)
+return HttpResponse(serializers.serialize('json', product_item))
+```
+
+Then, create the routing in `urls.py`
+
+2. Create New Function inside `views.py` to Add Product using AJAX
+
+First we import from `django.views.decorators.csrf` import csrf_exempt in views.py, then we create new function add_product_ajax:
+
+```
+@csrf_exempt
+def add_product_ajax(request):
+    if request.method == 'POST':
+        name = request.POST.get("name")
+        price = request.POST.get("price")
+        description = request.POST.get("description")
+        amount = request.POST.get("amount")
+        user = request.user
+
+        new_product = Product(name=name, amount=amount, price=price, description=description, user=user)
+        new_product.save()
+
+        return HttpResponse(b"CREATED", status=201)
+
+    return HttpResponseNotFound()
+```
+
+create the routing in `urls.py`
+
+4. Show the Product using fetch API
+
+Delete the existing div to show the data and replace it with . Then put <script> tag block at the bottom of the code( before {% endblock content %}) and create a async function:
+
+```
+async function getProducts() {
+    return fetch("{% url 'main:get_product_json' %}").then((res) => res.json())
+}
+```
+
+Still inside the <scripts> tag block called refreshProduct() we create new async function to show the item and refresh the items data asynchronously as following :
+
+```
+async function refreshProducts() {
+        document.getElementById("product_table").innerHTML = ""
+        const products = await getProducts()
+        let htmlString = `<tr>
+            <th>Name</th>
+            <th>amount</th>
+            <th>Price</th>
+            <th>Description</th>
+            <th>Date Added</th>
+        </tr>`
+        products.forEach((item) => {
+            htmlString += `\n<tr>
+            <td>${item.fields.name}</td>
+            <td>${item.fields.amount}</td>
+            <td>${item.fields.price}</td>
+            <td>${item.fields.description}</td>
+            <td>${item.fields.date_added}</td>
+        </tr>` 
+        })
+        
+        document.getElementById("product_table").innerHTML = htmlString
+    }
+
+    refreshProducts()
+
+
+```
+
+6. Create a JS Function to add a product
+
+inside the <script> tag block we add a function to add an item using AJAX like the following:
+
+```
+function addProduct() {
+        fetch("{% url 'main:add_product_ajax' %}", {
+            method: "POST",
+            body: new FormData(document.querySelector('#form'))
+        }).then(refreshProducts);
+
+        document.getElementById("form").reset();
+        return false;
+```
+
+Then we set the addProduct() function as as the onclick function of the modal's "Add Book" button:
+
+```
+document.getElementById("button_add").onclick = addProduct
+```
+
+</details>
